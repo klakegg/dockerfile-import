@@ -1,3 +1,4 @@
+# Class used for local caching
 class Dockerfiles
 
   def initialize

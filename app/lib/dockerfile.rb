@@ -9,13 +9,17 @@ class Dockerfile
 
     # Read file content and parse into commands
     @path.readlines.map do |line|
-      command = Command::parse self, line.gsub(/[\r\n]/, '')
+      @lines.append *(Command::parse self, line.gsub(/[\r\n]/, ''))
+    end
+  end
 
-      if command.is_a?(Array)
-        @lines.append *command
-      else
-        @lines.append command
-      end
+  def resolve(path)
+    if (@path.parent + path).exist?
+      @path.parent + path
+    elsif (@path.parent + (path + '.df')).exist?
+      @path.parent + (path + '.df')
+    else
+      raise "Unable to find #{newpath}"
     end
   end
 
