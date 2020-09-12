@@ -1,0 +1,8 @@
+FROM alpine:3.12 AS file
+
+RUN echo "Hello World!" > /hello-world.txt
+
+
+FROM scratch
+
+COPY --from=file /hello-world.txt /

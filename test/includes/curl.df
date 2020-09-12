@@ -1,0 +1,1 @@
+RUN apk --no-cache add curl
