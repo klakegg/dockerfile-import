@@ -2,11 +2,12 @@ module Command
 
   class Copy
 
-    attr_reader :line
-
-    def self.parse(dockerfile, line) 
+    def self.parse(dockerfile, line)
+      # Copy from disk
       if line.split(/\s+/).count == 3
         Command::Line::new(line)
+
+      # Copy from image
       else
         self::new(dockerfile, line)
       end

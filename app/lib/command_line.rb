@@ -2,8 +2,6 @@ module Command
 
   class Line
 
-    attr_reader :line
-
     def initialize(line)
       @line = line
     end

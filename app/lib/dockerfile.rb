@@ -19,13 +19,18 @@ class Dockerfile
     end
   end
 
-  # Fetch original content of file without any parsing
-  def as_include
+  # Unparsed lines after initial import
+  def unparsed
+    @lines
+  end
+
+  # Parsed lines after doing advanced import
+  def parsed
     @lines
   end
   
   def to_s
-    @lines.map { |l| l.to_s }.join "\n"
+    parsed.map { |l| l.to_s }.join "\n"
   end
 
 end

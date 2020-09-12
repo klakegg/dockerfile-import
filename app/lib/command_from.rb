@@ -2,7 +2,9 @@ module Command
 
   class From
 
-    attr_reader :line
+    def self.parse(dockerfile, line)
+      self::new dockerfile, line
+    end
 
     def initialize(dockerfile, line)
       @dockerfile = dockerfile

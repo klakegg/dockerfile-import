@@ -1,2 +1,2 @@
 RUN apk --no-cache add make
-INCLUDE curl
+IMPORT curl

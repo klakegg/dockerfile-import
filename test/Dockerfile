@@ -3,7 +3,7 @@ IMPORT imports/hello-world AS hello-world
 
 FROM alpine:3.12
 
-INCLUDE includes/make
+IMPORT includes/make
 
 COPY --from=hello-world / /
 
