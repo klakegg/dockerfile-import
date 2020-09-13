@@ -9,7 +9,7 @@ IMPORT <file> [AS <name>]
 
 Import without `name` will import the referenced file without any modifications.
 
-Import with `name` will update instances of `COPY` and `FROM` by prefixing the name when relevant.
+Import with `name` will import the referenced file and update instances of `COPY` and `FROM` by prefixing or inserting the name when relevant.
 
 `file` is looked up in this order:
 1. `file`.df
@@ -18,11 +18,11 @@ Import with `name` will update instances of `COPY` and `FROM` by prefixing the n
 
 Imported files may include further import instructions relative to the imported file.
 
-To build your image using import instructions, simply preprocess your Dockerfile:
+To build your image using import instructions, simply preprocess your Dockerfile before performing `docker build`:
 
 ```bash
 # Preprocess dockerfile
-docker run --rm -it \
+docker run --rm -i \
     -v $(pwd):/work \
     -u $(id -u) \
     klakegg/dockerfile-import \
