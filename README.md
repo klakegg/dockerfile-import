@@ -11,6 +11,11 @@ Import without `name` will import the referenced file without any modifications.
 
 Import with `name` will update instances of `COPY` and `FROM` by prefixing the name when relevant.
 
+`file` is looked up in this order:
+1. `file`.df
+1. `file`/Dockerfile
+1. `file`
+
 Imported files may include further import instructions relative to the imported file.
 
 To build your image using import instructions, simply preprocess your Dockerfile:

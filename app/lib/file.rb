@@ -14,14 +14,14 @@ module Docker
     end
 
     def load(path)
-      if (@path.parent + path).exist?
+      if (@path.parent + (path + '.df')).exist?
+        @loader.get @path.parent + (path + '.df')
+      elsif (@path.parent + path).exist?
         if (@path.parent + path).directory? and (@path.parent + (path + '/Dockerfile'))
           @loader.get @path.parent + (path + '/Dockerfile')
         else
           @loader.get @path.parent + path
         end
-      elsif (@path.parent + (path + '.df')).exist?
-        @loader.get @path.parent + (path + '.df')
       else
         raise "Unable to find #{path}"
       end
