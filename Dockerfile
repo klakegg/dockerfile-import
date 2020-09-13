@@ -1,6 +1,7 @@
 FROM ruby:2.7.1-slim-buster AS source
 
 ADD app /files/usr/lib/dockerfile-import
+ADD Gemfile Gemfile.lock LICENSE /files/usr/lib/dockerfile-import/
 
 RUN mkdir -p /files/usr/bin \
  && echo "#!/bin/sh\n\nexec ruby /usr/lib/dockerfile-import/main.rb \$@" > /files/usr/bin/dockerfile-import \
