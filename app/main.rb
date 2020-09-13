@@ -11,15 +11,20 @@ Dir["#{__dir__}/lib/*.rb"].each { |file| require file }
 # Create new loader
 loader = Docker::Loader::new
 
-# Fetch Dockerfile
-file = loader.get Pathname::new ARGV[0]
+begin
+  # Fetch Dockerfile
+  file = loader.get Pathname::new ARGV[0]
 
-if ARGV.count == 1
-  # Print resulting Dockerfile
-  puts file
-else
-  # Write resulting Dockerfile to file
-  File.open(ARGV[1], 'w') do |f|
-    f.write(file.to_s)
-  end
+  if ARGV.count == 1
+    # Print resulting Dockerfile
+    puts file
+  else
+    # Write resulting Dockerfile to file
+    File.open(ARGV[1], 'w') do |f|
+      f.write(file.to_s)
+    end
+  end  
+rescue => exception
+  puts exception.message
+  exit 2  
 end
