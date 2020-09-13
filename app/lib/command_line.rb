@@ -8,6 +8,10 @@ module Docker
         @line = line
       end
 
+      def as(name, names)
+        self
+      end
+
       def to_s
         @line
       end

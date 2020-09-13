@@ -2,29 +2,36 @@ module Docker
 
   module Command
 
+    # Reference: https://docs.docker.com/engine/reference/builder/#copy
     class Copy
 
-      def self.parse(file, line)
+      def self.parse(line)
         # Copy from image
-        if line.split(/\s+/).count == 4 and line.include? '--from='
-          parts = line.split /\s+/
-          self::new file, parts[1][7..], parts[2], parts[3]
+        if line.include? '--from='
+          parts = line.split /\s+/, 3
+          self::new parts[1][7..], parts[2]
     
         # Copy from disk
         else
-          Docker::Command::Line::new(line)
+          Line::new(line)
         end
       end
 
-      def initialize(file, from, target_from, target_to)
-        @file = file
+      def initialize(from, targets)
         @from = from
-        @target_from = target_from
-        @target_to = target_to
+        @targets = targets
+      end
+
+      def as(name, names)
+        if names.key? @from
+          Copy::new "#{name}--#{@from}", @targets
+        else
+          self
+        end
       end
 
       def to_s
-        "COPY --from=#{@from} #{@target_from} #{@target_to}"
+        "COPY --from=#{@from} #{@targets}"
       end
 
     end

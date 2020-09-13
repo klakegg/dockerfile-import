@@ -2,8 +2,6 @@ module Docker
 
   class File
 
-    attr_reader :loader, :path
-
     def initialize(loader, path)
       @loader = loader
       @path = path.realpath
@@ -15,11 +13,11 @@ module Docker
       end
     end
 
-    def resolve(path)
+    def load(path)
       if (@path.parent + path).exist?
-        @path.parent + path
+        @loader.get @path.parent + path
       elsif (@path.parent + (path + '.df')).exist?
-        @path.parent + (path + '.df')
+        @loader.get @path.parent + (path + '.df')
       else
         raise "Unable to find #{newpath}"
       end
@@ -31,12 +29,13 @@ module Docker
     end
 
     # Parsed lines after doing advanced import
-    def parsed
-      @lines
+    def parsed(name)
+      names = {}
+      @lines.map { |line| line.as name, names }
     end
     
     def to_s
-      parsed.map { |l| l.to_s }.join "\n"
+      @lines.map { |l| l.to_s }.join "\n"
     end
 
   end

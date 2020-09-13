@@ -2,26 +2,27 @@ module Docker
 
   module Command
 
+    # Reference: https://docs.docker.com/engine/reference/builder/#from
     class From
 
-      def self.parse(file, line)
+      def self.parse(line)
         parts = line.split(/\s+/)
 
         # FROM <image>
         if parts.count == 2
-          self::new file, nil, parts[1], nil
+          self::new nil, parts[1], nil
         
         # FROM --platform=<platform> <image>
         elsif parts.count == 3
-          self::new file, parts[1][11..], parts[2], nil
+          self::new parts[1][11..], parts[2], nil
         
         # FROM <image> AS <name>
         elsif parts.count == 4 and parts[2].upcase == 'AS'
-          self::new file, nil, parts[1], parts[3]
+          self::new nil, parts[1], parts[3]
 
         # FROM --platform=<platform> <image> AS <name>
         elsif parts.count == 5 and parts[2].upcase == 'AS'
-          self::new file, parts[1][11..], parts[2], parts[4]
+          self::new parts[1][11..], parts[2], parts[4]
 
         # Invalid instruction
         else
@@ -29,11 +30,20 @@ module Docker
         end
       end
 
-      def initialize(file, platform, image, name)
-        @file = file
+      def initialize(platform, image, name)
         @platform = platform
         @image = image
         @name = name
+      end
+
+      def as(name, names)
+        if @name == nil
+          From::new @platform, @image, name
+        else
+          newname = "#{name}--#{@name}"
+          names[@name] = newname
+          From::new @platform, @image, newname
+        end
       end
 
       def to_s
@@ -46,7 +56,7 @@ module Docker
         parts.append @image
 
         if @name != nil
-          parts.append 'AS', @image
+          parts.append 'AS', @name
         end
 
         parts.join ' '
