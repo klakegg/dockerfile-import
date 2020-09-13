@@ -37,12 +37,14 @@ module Docker
       end
 
       def as(name, names)
+        image = (names.key? @image) ? names[@image] : @image
+
         if @name == nil
-          From::new @platform, @image, name
+          From::new @platform, image, name
         else
           newname = "#{name}--#{@name}"
           names[@name] = newname
-          From::new @platform, @image, newname
+          From::new @platform, image, newname
         end
       end
 
