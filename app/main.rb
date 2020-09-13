@@ -19,7 +19,7 @@ if ARGV.count == 1
   puts file
 else
   # Write resulting Dockerfile to file
-  File.open(ARGV[1], 'w') do |file|
-    file.write(file.to_s)
+  File.open(ARGV[1], 'w') do |f|
+    f.write(file.to_s)
   end
 end

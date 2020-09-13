@@ -11,6 +11,7 @@ push-edge:
 	@docker push $(IMAGE):edge
 
 push-release:
-	# TODO With version number
+	@docker tag $(IMAGE):dev $(IMAGE):$$VERSION
 	@docker tag $(IMAGE):dev $(IMAGE):latest
+	@docker push $(IMAGE):$$VERSION
 	@docker push $(IMAGE):latest
