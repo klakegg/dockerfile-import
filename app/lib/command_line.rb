@@ -1,13 +1,17 @@
-module Command
+module Docker
 
-  class Line
+  module Command
 
-    def initialize(line)
-      @line = line
-    end
+    class Line
 
-    def to_s
-      @line
+      def initialize(line)
+        @line = line
+      end
+
+      def to_s
+        @line
+      end
+
     end
 
   end

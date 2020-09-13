@@ -1,3 +1,6 @@
 {
-
+    "files.associations": {
+        "*.rb": "ruby",
+        "*.df": "dockerfile",
+    }
 }
