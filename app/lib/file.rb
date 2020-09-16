@@ -2,6 +2,8 @@ module Docker
 
   class File
 
+    attr_reader :path
+
     def initialize(loader, path)
       @loader = loader
       @path = path.realpath

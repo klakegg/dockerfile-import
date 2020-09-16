@@ -5,7 +5,7 @@ module Docker
     # Reference: https://docs.docker.com/engine/reference/builder/#from
     class From
 
-      def self.parse(line)
+      def self.parse(file, line)
         parts = line.split(/\s+/)
 
         # FROM <image>
@@ -21,7 +21,7 @@ module Docker
           self::new nil, parts[1], parts[3]
 
         # FROM --platform=<platform> <image> AS <name>
-        elsif parts.count == 5 and parts[2].upcase == 'AS'
+        elsif parts.count == 5 and parts[3].upcase == 'AS'
           self::new parts[1][11..], parts[2], parts[4]
 
         # Invalid instruction
