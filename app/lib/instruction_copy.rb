@@ -1,6 +1,6 @@
-module Docker
+module DockerfileImport
 
-  module Command
+  module Instruction
 
     # Reference: https://docs.docker.com/engine/reference/builder/#copy
     class Copy

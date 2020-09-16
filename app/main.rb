@@ -9,7 +9,7 @@ end
 Dir["#{__dir__}/lib/*.rb"].each { |file| require file }
 
 # Create new loader
-loader = Docker::Loader::new
+loader = DockerfileImport::Loader::new
 
 begin
   # Fetch Dockerfile

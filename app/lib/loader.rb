@@ -1,4 +1,4 @@
-module Docker
+module DockerfileImport
 
   # Class used for local caching
   class Loader

@@ -1,6 +1,6 @@
-module Docker
+module DockerfileImport
 
-  module Command
+  module Instruction
 
     class Import
 

@@ -1,4 +1,4 @@
-module Docker
+module DockerfileImport
 
   class File
 
@@ -11,7 +11,7 @@ module Docker
 
       # Read file content and parse into commands
       @path.readlines.map do |line|
-        @lines.append *(Docker::Command::parse self, line.gsub(/[\r\n]/, ''))
+        @lines.append *(Instruction::parse self, line.gsub(/[\r\n]/, ''))
       end
     end
 
