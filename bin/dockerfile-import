@@ -1,12 +1,12 @@
+#!/usr/bin/env ruby
+
 require 'pathname'
+require 'dockerfile-import'
 
 if ARGV.count == 0 or ARGV.count > 2
   puts "Usage: dockerfile-import [source] (target)"
   exit 1
 end
-
-# Loading library
-Dir["#{__dir__}/lib/*.rb"].each { |file| require file }
 
 # Create new loader
 loader = DockerfileImport::Loader::new

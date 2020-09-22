@@ -24,7 +24,10 @@ jobs:
     #    buildx-version: latest
     #    qemu-version: latest
 
-    - name: Build
+    - name: Build gem
+      run: make gem
+
+    - name: Build docker image
       run: make docker
 
     - name: Docker login
@@ -46,3 +49,7 @@ jobs:
     - name: Push images
       if: "startsWith(github.ref, 'refs/tags/v')"
       run: make push-release
+
+    - name: Push gem
+      if: "startsWith(github.ref, 'refs/tags/v')"
+      run: make push-gem

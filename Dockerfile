@@ -1,18 +1,16 @@
 FROM ruby:2.7.1-slim-buster AS source
 
-ADD app /files/usr/lib/dockerfile-import
-ADD Gemfile Gemfile.lock LICENSE /files/usr/lib/dockerfile-import/
+ADD . /work
 
-RUN mkdir -p /files/usr/bin \
- && echo "#!/bin/sh\n\nexec ruby /usr/lib/dockerfile-import/main.rb \$@" > /files/usr/bin/dockerfile-import \
- && chmod a+x /files/usr/bin/dockerfile-import \
- && ln -sf dockerfile-import /files/usr/bin/dfi
+RUN test -e /work/dockerfile-import.gem || gem build /work/dockerfile-import.gemspec -C /work --output=dockerfile-import.gem
 
 
 FROM ruby:2.7.1-slim-buster
 
-COPY --from=source /files /
+COPY --from=source /work/dockerfile-import.gem /
+
+RUN gem install /dockerfile-import.gem
 
 WORKDIR /work
 
-ENTRYPOINT ["dfi"]
+ENTRYPOINT ["dockerfile-import"]
